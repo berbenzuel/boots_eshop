@@ -1,0 +1,10 @@
+.nav-nested {
+    margin-left: 1.5rem;
+    padding-left: 0.75rem;
+    border-left: 2px solid #e0e0e0;
+}
+
+.nav-nested .nav-link {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.75rem;
+}

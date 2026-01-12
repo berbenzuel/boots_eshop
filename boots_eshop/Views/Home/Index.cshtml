@@ -1,0 +1,18 @@
+﻿@using BootEshop.ViewArgs
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="css/features/product.css" />
+    <link rel="stylesheet" href="css/features/home.css" />
+}
+<div class="text-center d-flex flex-column  gap-5 ">
+    <partial name="Partials/Home/_Carrousel"/>
+    <partial name="Partials/Home/_Categories"/>
+    <partial name="Partials/Common/_Separator"/>
+    @await Component.InvokeAsync("ProductsSelection", new ProductsSelectionArgs("NEJNOVĚJŠÍ KOUSKY", "V NAŠÍ NABÍDCE", new ProductFilterModelDto())));
+    
+</div>

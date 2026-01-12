@@ -1,0 +1,72 @@
+@model boots_eshop.Models.ViewModels.OrderFormViewModel
+
+@section Scripts
+{
+    <link rel="stylesheet" href="~/css/order/form.css"/>
+}
+<form 
+    asp-action="OrderForm"
+    method="post">
+    <h1>Poptávkový formulář</h1>
+    
+    <span>Vyplňte formulář níže a my se Vám ozveme, jakmile to půjde</span>
+    <div id="name-surname">
+        <label for="name">
+            Jméno
+            <input type="text" id="name" class="text-input" name="fname" placeholder="Zadejte své jméno...">
+        </label>
+        <label for="surname">
+            Příjmení
+            <input type="text" id="surname" class="text-input" name="sname" placeholder="Zadejte své příjmení...">
+        </label>
+    </div>
+    <label class="credential" for="email">
+        E-mail
+        <input type="email" id="email" class="text-input" name="email" placeholder="Zadejte svůj e-mail...">
+        <span class="err">Zadaný e-mail nemá správný formát</span>
+    </label>
+    <label for="mob-num">
+        Telefon
+        <input type="tel" id="mob-num" class="text-input" name="tel" placeholder="Zadejte svůj telefon...">
+    </label>
+    <label for="country">
+        Země
+        <select id="country" class="text-input">
+            <option>foo</option>
+             <option>boo</option>
+            <option>baz</option>
+        </select>
+    </label>
+    <label for="payment" class="radio-label">
+        Způsob platby
+        <div>
+
+            <label for="hotove">
+                <input type="radio" id="hotove" name="payment" value="hotove"/>
+                    Hotově
+            </label>
+
+
+            <label for="prevodem">
+                <input type="radio" id="prevodem" name="payment" value="prevodem"/>
+                Převodem
+            </label>
+
+
+            <label for="kartou">
+                <input type="radio" id="kartou" name="payment" value="kartou"/>
+                Kartou
+            </label>
+        </div>
+    </label>
+
+    <div class="buttons">
+        
+        <button type="submit" class="btn btn-primary">Pokračovat</button>
+        
+        <a asp-action="Index" asp-controller="Cart" class="btn btn-outline-secondary ms-2">Zrušit</a>
+        
+    </div>
+
+
+</form>

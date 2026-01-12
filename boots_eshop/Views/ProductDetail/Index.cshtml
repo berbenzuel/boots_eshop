@@ -1,0 +1,150 @@
+@model boots_eshop.Models.ViewModels.ProductDetailViewModel
+
+
+@section Scripts
+{
+    <script src="~/js/detail/product-detail.js"></script>
+}
+
+<div class="product-page">
+
+    <!-- TOP -->
+    <div class="d-flex flex-row gap-5 w-100">
+
+        <!-- GALLERY -->
+        <div class="gallery">
+            <div class=" selected-image-wrapper ratio ratio-1x1 background-color-base border-radius-primary">
+                <img id="mainImage"
+                     src="@Model.ImageUrls.FirstOrDefault()"
+                     class="img-fluid object-fit-cover border-radius-primary"/>
+    
+            </div>
+            
+            <div class="d-flex align-items-center mt-1">
+                <button class="border-end fs-4" onclick="scrollThumbs(-1)">‹</button>
+
+                <div class="thumb-row" id="thumbRow">
+                    @foreach (var img in Model.ImageUrls)
+                    {
+                        <img src="@img"
+                             class="thumb"
+                             onclick="setMainImage(this)"/>
+                    }
+                </div>
+
+                <button class="thumb-nav" onclick="scrollThumbs(1)">›</button>
+            </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="w-100">
+            <div class="d-flex flex-row justify-content-between">
+                <h1>@Model.Product.Name</h1>
+                <div class="">
+                    <img src="~/img/manufacturer/{@Model.Manufacturer.Id}" alt="@Model.Manufacturer.Name"/>
+                </div>
+            </div>
+
+            <p class="description">
+                @Model.Product.ShortDescription
+            </p>
+
+            <hr class="w-100"/>
+                
+            
+            <!-- COLORS -->
+            <form id="colorForm" method="get"
+                  asp-action="Index" asp-controller="ProductDetail">
+                <input type="hidden" name="SelectedColorId" id="SelectedColorId" value="@Model.SelectedColorId" />
+                <input type="hidden" name="ProductId" id="ProductId" value="@Model.Product.Id" />
+
+                <div class="options">
+                    @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
+                    {
+                        <label class="color-wrapper @(color.Id == Model.SelectedColorId ? "border-color-accent" : "border-color-dark")"
+                               style="background-color:@color.HexColor">
+                            <input type="radio"
+                                   name="color"
+                                   value="@color.Id"
+                                   @(color.Id == Model.SelectedColorId ? "checked" : "")
+                                   onchange="submitColor(this.value)" />
+                        </label>
+                    }
+                </div>
+            </form>
+            
+            <hr class="w-100"/>
+
+            <!-- Sizes as radios -->
+            <div class="field">
+                <label>Size</label>
+                <div class="options" id="sizeOptions">
+                    @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
+                    {
+
+                        <label class="option">
+                            @if (Model.SelectedColorId is { } selectedColorId && Model.Variants.Where(v => v.Size == size).Select(v => v.Color.Id).Contains(selectedColorId))
+                            {
+                                <input type="radio" name="SelectedSizeId" value="@size.Id" class="color-selector"/>
+                                <span class="color-primary">@size.Size</span>
+                            }
+                            else
+                            {
+                                <input type="radio" name="SelectedSizeId" value="@size.Id" disabled="disabled"/>
+                                <span class="color-accent">@size.Size</span>
+                            }
+                        </label>
+                    }
+                </div>
+            </div>
+            
+
+            <!-- PRICE -->
+            <div class="price">
+                @if (@Model.Product.SalePrice is not null)
+                {
+                    <span class="color-accent fw-bold fs-4">@Model.Product.SalePrice Kč</span>
+                    <span class="color-dark fw-light text-decoration-line-through fs-5">@Model.Product.Price Kč</span>
+                }
+                else
+                {
+                    <span class="color-primary fw-bold fs-4">@Model.Product.Price Kč</span>
+                }
+            </div>
+
+            <button class="add-to-cart">
+                Přidat do košíku
+            </button>
+        </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="product-bottom">
+
+        <div class="text">
+            <h2>Informace o produktu</h2>
+            @Html.Raw(Model.Product.LongDescription)
+        </div>
+
+        <div class="params">
+            <h3>Parametry produktu</h3>
+
+            <table>
+                <tr>
+                    <td>Kategorie</td>
+                    <td>@Model.ProductCategory.Name</td>
+                </tr>
+                <tr>
+                    <td>Výrobce</td>
+                    <td>@Model.Manufacturer.Name</td>
+                </tr>
+                <tr>
+                    <td>Kód</td>
+                    <td>@Model.Product.Id</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>

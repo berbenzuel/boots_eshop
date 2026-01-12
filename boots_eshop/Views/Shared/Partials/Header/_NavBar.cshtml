@@ -1,0 +1,19 @@
+<div class="nav-bar d-flex flex-row">
+    <a class="nav-item-menu-home" asp-controller="Catalog" asp-action="BoyCatalog">
+        Chlapecké
+        <i class="fa-solid fa-child"></i>
+    </a>
+    <a class="nav-item-menu-home" asp-controller="Catalog" asp-action="GirlCatalog">
+        Dívčí
+        <i class="fa-solid fa-child-dress"></i>
+    </a>
+    <a class="nav-item-menu-home" asp-controller="Catalog" asp-action="Index">Doplňky</a>
+    <a class="nav-item-menu-home" asp-controller="Catalog" asp-action="Index">Ostatní</a>
+    <a class="nav-item-menu-home" asp-controller="Catalog" asp-action="Index">Kontakt</a>
+    
+    @if (this.User.IsInRole("Admin"))
+    {
+        <a asp-controller="Admin" asp-action="Index" class="nav-item-menu-home" >Adminek</a>    
+    }
+    
+</div>

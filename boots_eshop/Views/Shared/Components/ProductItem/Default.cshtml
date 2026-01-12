@@ -1,0 +1,42 @@
+@using Database.Entities
+@model Database.Entities.Product
+
+
+
+<div class="product-item" data-url="@Url.Action("Index", "ProductDetail", new { productId = Model.Id})">
+    <div class="ratio ratio-1x1 background-color-base border-radius-primary">
+        <img
+            class="img-fluid object-fit-cover border-radius-primary"
+            src="@Url.Action(
+                     "CatalogProductImage",
+                     "Source",
+                     new { id = Model.Id }
+                 )"
+            alt="boot-picture: @Model.Id" />    
+    </div>
+    <div class="d-flex flex-column gap-3 my-3 px-1" >
+        <span class="fw-normal px-2 color-primary fs-5">
+            @Model.Name
+        </span>
+        <div class="product-item-desc px-2">
+            <div class="product-item-prices d-flex flex-row g-1 align-items-center">
+                @if (@Model.SalePrice is not null)
+                {
+                    <span class="color-accent fw-bold fs-4">@Model.SalePrice Kč</span>
+                    <span class="color-dark fw-light text-decoration-line-through fs-5">@Model.Price Kč</span>
+                }
+                else
+                {
+                    <span class="color-primary fw-bold fs-4">@Model.Price Kč</span>
+                }
+            </div>
+
+            <a href="javascript:showCartPopup('@Model.Id')"
+               class="color-dark openAddCart fs-2"
+               data-product-id="@Model.Id">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,74 @@
+@model boots_eshop.Models.ViewModels.CartViewModel
+
+
+
+<h2>Your Cart</h2>
+
+@if (!Model.CartItems.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Unit Price</th>
+            <th style="width:120px;">Quantity</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.CartItems)
+        {
+            
+            <tr>
+                <td><img /></td>
+                <td>@item.ProductName / @item.Color / @item.Size.ToString()</td>
+                <td>
+                    @if (@item.SaleUnitPrice is not null)
+                    {
+                        <span class="color-accent fw-bold">@item.SaleUnitPrice Kč</span>
+                        <span class="color-dark fw-light text-decoration-line-through">@item.UnitPrice Kč</span>
+                    }
+                    else
+                    {
+                        <span class="color-primary fw-bold">@item.UnitPrice Kč</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="UpdateQuantity" method="post" class="quantity-form">
+                        <input type="hidden" name="stockId" value="@item.StockId"/>
+                        <input type="number"
+                               name="Quantity"
+                               value="@item.Quantity"
+                               min="1"
+                               class="form-control me-2 w-auto quantity-selector"/>
+                    </form>
+                </td>
+                <td>@item.TotalPrice Kč</td>
+                <td>
+                    <form asp-action="Remove" method="post">
+                        <input type="hidden" name="stockId" value="@item.StockId"/>
+                        <button class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <h4>Total: @Model.TotalPrice Kč</h4>
+        <a class="btn btn-success" asp-action="OrderForm" asp-controller="Order">Checkout</a>
+    </div>
+    
+}
+
+@section Scripts
+{
+    <script src="js/cart/cart.js" defer="defer"></script>
+}

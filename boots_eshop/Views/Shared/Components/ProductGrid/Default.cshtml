@@ -1,0 +1,13 @@
+@using Database.Entities
+@model IEnumerable<Database.Entities.Product>
+
+@section Styles
+{
+    
+}
+<div class="product-grid">
+    @foreach (var item in Model)
+    {
+        @await Component.InvokeAsync(name:"ProductItem", item) 
+    }
+</div>

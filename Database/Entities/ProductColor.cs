@@ -1,0 +1,10 @@
+namespace Database.Entities;
+
+public class ProductColor
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string HexColor { get; set; }
+    
+    public ICollection<Stock> Stocks { get; set; }
+}

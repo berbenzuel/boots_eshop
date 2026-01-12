@@ -1,0 +1,29 @@
+<div>
+    
+    
+    <a asp-controller="Home" asp-action="Index"class="d-flex  flex-row align-items-center gap-2 justify-content-center">
+        <i class="fa-solid fa-house"></i>
+        <span>home</span>
+    </a>        
+    <nav class="navbar navbar-light bg-light d-flex flex-column gap-5 align-content-start">
+        <a class="navbar-brand" asp-controller="Admin" asp-action="Index">Admin</a>
+
+        <nav class="nav nav-pills flex-column px-5">
+            <a class="nav-link" asp-controller="Admin" asp-action="ProductOverview">Produkty</a>
+
+            <div class="nav nav-pills flex-column nav-nested">
+                <a class="nav-link" asp-controller="Admin" asp-action="ProductOverview">Správa</a>
+                <a class="nav-link" asp-controller="Admin" asp-action="AddProduct">Přidat</a>
+            </div>
+
+            <a class="nav-link" href="#item-2">Objednávky</a>
+
+            <a class="nav-link" href="#item-3">Uživatelé</a>
+
+            <div class="nav nav-pills flex-column nav-nested">
+                <a class="nav-link" asp-controller="Admin">Správa</a>
+                <a class="nav-link" asp-controller="Admin" asp-action="CreateUser">Přidat</a>
+            </div>
+        </nav>
+    </nav>
+</div>

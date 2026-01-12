@@ -1,0 +1,76 @@
+@model BootEshop.ViewModels.AddCartEntryViewModel
+<script>
+    window.productId = @Model.ProductId.ToString()
+</script>
+<form id="addCartForm"
+      asp-action="Add"
+      asp-controller="Cart"
+      method="post">
+<div class="add-cart-entry">
+    <!-- Quantity -->
+    <div class="field">
+        <label for="quantity">Quantity</label>
+        <input type="number"
+               id="quantity"
+               name="Quantity"
+               min="1"
+               value="@Model.Quantity"
+               class="form-control" />
+    </div>
+
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="field">
+        <label>Color</label>
+        <div class="options">
+            @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
+            {
+                <label class="option color-dark">
+                    @if (color.Value == Model.SelectedColorId)
+                    {
+                        <input type="radio" name="SelectedColorId" value="@color.Value" checked="checked"/>
+                    }
+                    else
+                    {
+                        <input type="radio" name="SelectedColorId" value="@color.Value"/>
+                    }
+
+                    <span>@color.Text</span>
+                </label>
+            }
+        </div>
+    </div>
+
+    <!-- Sizes as radios -->
+    <div class="field">
+        <label>Size</label>
+        <div class="options" id="sizeOptions">
+            @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
+            {
+                    
+                <label class="option">
+                    @if (Model.Variants.Where(v => v.Size == size).Select(v =>v.Color.Value).Contains(Model.SelectedColorId))
+                    {
+                        <input type="radio" name="SelectedSizeId" value="@size.Value" class="color-selector"/>
+                        <span class="color-primary">@size.Text</span>
+                    }
+                    else
+                    {
+                        <input type="radio" name="SelectedSizeId" value="@size.Value" disabled="disabled"/>
+                        <span class="color-accent">@size.Text</span>
+                    }
+                </label>
+            }
+        </div>
+    </div>
+
+
+    <!-- Actions -->
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">OK</button>
+        <button type="button" class="btn btn-secondary" onclick="closeAddCart()">Cancel</button>
+    </div>
+</div>
+</form>
+
+

@@ -1,0 +1,104 @@
+.selected-image-wrapper {
+    width: 50rem;
+}
+.manufacturer-image-wrapper {
+    width: 20rem;
+    height: auto;
+}
+.color-wrapper {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 0.3rem solid;
+}
+
+
+
+.thumb-row {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    max-width: 320px;
+}
+
+.thumb {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+
+.info h1 {
+    margin-bottom: 0.5rem;
+}
+
+.brand {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.colors {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.color-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.sizes {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.size {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.price {
+    margin: 1.5rem 0;
+}
+
+.price .old {
+    text-decoration: line-through;
+    margin-right: 1rem;
+    color: #999;
+}
+
+.price .current {
+    font-size: 1.8rem;
+    color: #c00;
+}
+
+.add-to-cart {
+    background: #c00;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.product-bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.params table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.params td {
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem;
+}
