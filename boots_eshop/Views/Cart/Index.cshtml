@@ -27,7 +27,14 @@ else
             
             <tr>
                 <td><img /></td>
-                <td>@item.ProductName / @item.Color / @item.Size.ToString()</td>
+                <td>
+                    <a class="text-decoration-none" asp-action="Index" asp-controller="ProductDetail"
+                       asp-route-colorId="@item.ColorId" 
+                       asp-route-productId="@item.ProductId" 
+                       asp-route-sizeId="@item.SizeId">
+                        @item.ProductName / @item.Color / @item.Size.ToString()
+                    </a>
+                </td>
                 <td>
                     @if (@item.SaleUnitPrice is not null)
                     {

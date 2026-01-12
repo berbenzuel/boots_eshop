@@ -5,3 +5,5 @@ document.querySelectorAll('form[class="quantity-form"]').forEach((el) => {
         el.submit();
     })
 })
+
+

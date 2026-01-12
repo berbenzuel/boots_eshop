@@ -3,8 +3,11 @@
 
 @section Scripts
 {
-    <script src="~/js/detail/product-detail.js"></script>
+    <script src="~/js/detail/product-detail.js" defer="defer"></script>
 }
+
+<form>
+    
 
 <div class="product-page">
 
@@ -41,7 +44,7 @@
             <div class="d-flex flex-row justify-content-between">
                 <h1>@Model.Product.Name</h1>
                 <div class="">
-                    <img src="~/img/manufacturer/{@Model.Manufacturer.Id}" alt="@Model.Manufacturer.Name"/>
+                    <img src="~/img/manufacturer/@Model.Manufacturer.Id" alt="@Model.Manufacturer.Name"/>
                 </div>
             </div>
 
@@ -52,52 +55,63 @@
             <hr class="w-100"/>
                 
             
-            <!-- COLORS -->
-            <form id="colorForm" method="get"
-                  asp-action="Index" asp-controller="ProductDetail">
-                <input type="hidden" name="SelectedColorId" id="SelectedColorId" value="@Model.SelectedColorId" />
-                <input type="hidden" name="ProductId" id="ProductId" value="@Model.Product.Id" />
+           
+            <div class="d-flex flex-row justify-content-between">
+                <!-- COLORS -->
+                <div class="field w-100">
+                    <span>Colors</span>
 
-                <div class="options">
-                    @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
-                    {
-                        <label class="color-wrapper @(color.Id == Model.SelectedColorId ? "border-color-accent" : "border-color-dark")"
-                               style="background-color:@color.HexColor">
-                            <input type="radio"
-                                   name="color"
-                                   value="@color.Id"
-                                   @(color.Id == Model.SelectedColorId ? "checked" : "")
-                                   onchange="submitColor(this.value)" />
-                        </label>
-                    }
-                </div>
-            </form>
+                    <div class="options">
+                        @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
+                        {
+                            <label class="color-wrapper @(color.Id == Model.SelectedColorId ? "border-color-accent" : "border-color-light")"
+                                   style="background-color:@color.HexColor">
+                                <input type="radio"
+                                       class="invisible"
+                                       name="SelectedColorId"
+                                       value="@color.Id"
+                                       @(color.Id == Model.SelectedColorId ? "checked" : "")
+                                       onchange="submitColor('@Model.Product.Id', '@color.Id')" />
+                            </label>
+                        }
+                    </div>
             
-            <hr class="w-100"/>
+                </div>
+                <!-- Sizes as radios -->
+                <div class="field w-100 flex-grow-1">
+                    <label>Size</label>
+                    <div class="options" id="sizeOptions">
+                        @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
+                        {
 
-            <!-- Sizes as radios -->
-            <div class="field">
-                <label>Size</label>
-                <div class="options" id="sizeOptions">
-                    @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
-                    {
-
-                        <label class="option">
-                            @if (Model.SelectedColorId is { } selectedColorId && Model.Variants.Where(v => v.Size == size).Select(v => v.Color.Id).Contains(selectedColorId))
-                            {
-                                <input type="radio" name="SelectedSizeId" value="@size.Id" class="color-selector"/>
-                                <span class="color-primary">@size.Size</span>
-                            }
-                            else
-                            {
-                                <input type="radio" name="SelectedSizeId" value="@size.Id" disabled="disabled"/>
-                                <span class="color-accent">@size.Size</span>
-                            }
-                        </label>
-                    }
+                            <label class="option">
+                                @{
+                                    var disabled = !(Model.SelectedColorId is { } selected && Model.Variants.Where(v => v.Size == size).Select(v => v.Color.Id).Contains(selected));
+                                    var active = Model.SelectedSizeId == size.Id ? "checked" : "";
+                                    if (disabled)
+                                    {
+                                        <input type="radio" name="SelectedSizeId" value="@size.Id" class="color-selector" disabled="disabled"
+                                           checked=@active/>    
+                                        <span class="color-accent">@size.Size</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" name="SelectedSizeId" value="@size.Id" class="color-selector" 
+                                               checked=@active/>
+                                        <span class="color-primary">@size.Size</span>
+                                    }
+                                    
+                                    
+                                }
+                                
+                            </label>
+                        }
+                    </div>
                 </div>
             </div>
             
+            <hr class="w-100"/>
+
 
             <!-- PRICE -->
             <div class="price">
@@ -112,9 +126,9 @@
                 }
             </div>
 
-            <button class="add-to-cart">
+            <a class="add-to-cart" onclick="showCartPopup('@Model.Product.Id', '@Model.SelectedColorId', '@Model.SelectedSizeId')">
                 Přidat do košíku
-            </button>
+            </a>
         </div>
     </div>
 
@@ -148,3 +162,4 @@
     </div>
 
 </div>
+</form>

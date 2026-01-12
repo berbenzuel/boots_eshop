@@ -1,11 +1,13 @@
 window.productId = null;
 
-async function showCartPopup(productId , color = null) {
+async function showCartPopup(productId , color = null, size = null) {
     // Store globally
     window.productId = productId;
 
+    console.log(`Showing ${size} size ${size}`);
     let url = `/Cart/Add?productId=${productId}`;
     if (color) url += `&colorId=${color}`;
+    if (size) url += `&sizeId=${size}`;
 
     const response = await fetch(url);
     const html = await response.text();

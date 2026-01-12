@@ -4,69 +4,81 @@
 {
     <link rel="stylesheet" href="~/css/order/form.css"/>
 }
-<form 
-    asp-action="OrderForm"
-    method="post">
-    <h1>Poptávkový formulář</h1>
+
+<div>
+    <div class="ratio-1x1 overflow-hidden h-100">
+        <img src="~/img/order-form/order-form-image.png"/>
+    </div>
     
-    <span>Vyplňte formulář níže a my se Vám ozveme, jakmile to půjde</span>
-    <div id="name-surname">
-        <label for="name">
-            Jméno
-            <input type="text" id="name" class="text-input" name="fname" placeholder="Zadejte své jméno...">
-        </label>
-        <label for="surname">
-            Příjmení
-            <input type="text" id="surname" class="text-input" name="sname" placeholder="Zadejte své příjmení...">
-        </label>
-    </div>
-    <label class="credential" for="email">
-        E-mail
-        <input type="email" id="email" class="text-input" name="email" placeholder="Zadejte svůj e-mail...">
-        <span class="err">Zadaný e-mail nemá správný formát</span>
-    </label>
-    <label for="mob-num">
-        Telefon
-        <input type="tel" id="mob-num" class="text-input" name="tel" placeholder="Zadejte svůj telefon...">
-    </label>
-    <label for="country">
-        Země
-        <select id="country" class="text-input">
-            <option>foo</option>
-             <option>boo</option>
-            <option>baz</option>
-        </select>
-    </label>
-    <label for="payment" class="radio-label">
-        Způsob platby
-        <div>
+    <form
+        asp-action="OrderForm"
+        method="post"
+        class="d-flex gap-3 flex-column">
 
-            <label for="hotove">
-                <input type="radio" id="hotove" name="payment" value="hotove"/>
-                    Hotově
+        <h1 class="color-primary">Poptávkový formulář</h1>
+
+        <span class="color-dark">Vyplňte formulář níže a my se Vám ozveme, jakmile to půjde</span>
+
+        <div class="d-flex flex-column gap-3 fs-6 justify-content-between w-100 color-dark">
+            <div class="d-flex flex-row gap-3 w-100">
+                <label for="name">
+                    Jméno
+                    <input type="text" id="name" class="text-input" name="fname" placeholder="Zadejte své jméno...">
+                </label>
+                <label for="surname">
+                    Příjmení
+                    <input type="text" id="surname" class="text-input" name="sname" placeholder="Zadejte své příjmení...">
+                </label>
+            </div>
+            <label class="credential" for="email">
+                E-mail
+                <input type="email" id="email" class="text-input" name="email" placeholder="Zadejte svůj e-mail...">
+            </label>
+            <label for="mob-num">
+                Telefon
+                <input type="tel" id="mob-num" class="text-input" name="tel" placeholder="Zadejte svůj telefon...">
+            </label>
+            <label for="country">
+                Země
+                <select id="country" class="text-input">
+                    <option>foo</option>
+                    <option>boo</option>
+                    <option>baz</option>
+                </select>
+            </label>
+            <label for="payment" class="radio-label">
+                Způsob platby
+                <div>
+
+                    <label for="hotove">
+                        <input type="radio" id="hotove" name="payment" value="hotove"/>
+                        Hotově
+                    </label>
+
+
+                    <label for="prevodem">
+                        <input type="radio" id="prevodem" name="payment" value="prevodem"/>
+                        Převodem
+                    </label>
+
+
+                    <label for="kartou">
+                        <input type="radio" id="kartou" name="payment" value="kartou"/>
+                        Kartou
+                    </label>
+                </div>
             </label>
 
+            <div class="buttons">
 
-            <label for="prevodem">
-                <input type="radio" id="prevodem" name="payment" value="prevodem"/>
-                Převodem
-            </label>
+                <button type="submit" class="btn btn-primary">Pokračovat</button>
 
+                <a asp-action="Index" asp-controller="Cart" class="btn btn-outline-secondary ms-2">Zrušit</a>
 
-            <label for="kartou">
-                <input type="radio" id="kartou" name="payment" value="kartou"/>
-                Kartou
-            </label>
+            </div>
         </div>
-    </label>
-
-    <div class="buttons">
-        
-        <button type="submit" class="btn btn-primary">Pokračovat</button>
-        
-        <a asp-action="Index" asp-controller="Cart" class="btn btn-outline-secondary ms-2">Zrušit</a>
-        
-    </div>
 
 
-</form>
+
+    </form>
+</div>

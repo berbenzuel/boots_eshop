@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/common/separator.css" />
     <link rel="stylesheet" href="~/css/cart/popup.css" />
     @await RenderSectionAsync("Styles", required: false)
-    @* <script src="https://kit.fontawesome.com/3db67ba0a9.js" crossorigin="anonymous"></script> *@
+    <script src="https://kit.fontawesome.com/3db67ba0a9.js" crossorigin="anonymous"></script> 
     @await RenderSectionAsync("Scripts", required: false)
     <script src="~/js/cart/cart-popup.js" defer="defer"></script>
     <script src="~/js/product/product-item.js" defer="defer"></script>
@@ -29,7 +29,9 @@
         <partial name="Partials/Header/_LoginBar"/>
         
         <div class="px-main d-flex flex-row justify-content-between align-items-center">
-            <img src="img/logo.png" alt="logo" class="logo">
+            <a asp-action="Index" asp-controller="Home">
+                <img src="img/logo.png" alt="logo" class="logo">
+            </a>
             <partial name="Partials/Header/_ControlBar"/>
         </div>
         <div class="px-main">

@@ -8,7 +8,7 @@
         .scrollBy({ left: dir * 100, behavior: 'smooth' });
 }
 
-    function submitColor(colorId) {
-        document.getElementById('SelectedColorId').value = colorId;
-        document.getElementById('colorForm').submit();
+    function submitColor(productId, colorId) {
+        location.href = '/ProductDetail?productId=' + productId + '&colorId=' + colorId;
     }
+    

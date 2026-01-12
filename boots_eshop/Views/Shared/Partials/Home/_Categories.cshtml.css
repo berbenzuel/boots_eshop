@@ -1,0 +1,36 @@
+.categories-second {
+    display: flex;
+    flex-flow: row;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.category-second {
+    width: 100%;
+    position: relative;
+    /*min-width: 420px;*/
+}
+
+.category-second img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.category-second .title {
+    position: absolute;
+
+    text-wrap: nowrap;
+    container: category-second / inline-size;
+    font-size: 3cqh;
+    padding: 0;
+    top: 50%;
+    left: 20%;
+    transform: translate(-30%,-40%);
+    color: var(--color-primary);
+}
+.category-second:hover .title {
+    color: var(--color-accent);
+    text-decoration: underline;
+    transition: 0.3s;
+}

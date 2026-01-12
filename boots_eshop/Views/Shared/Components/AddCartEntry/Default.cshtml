@@ -20,49 +20,48 @@
 
     <input type="hidden" asp-for="ProductId" />
 
-    <div class="field">
-        <label>Color</label>
-        <div class="options">
-            @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
-            {
-                <label class="option color-dark">
-                    @if (color.Value == Model.SelectedColorId)
-                    {
-                        <input type="radio" name="SelectedColorId" value="@color.Value" checked="checked"/>
-                    }
-                    else
-                    {
-                        <input type="radio" name="SelectedColorId" value="@color.Value"/>
-                    }
+     <div class="d-flex flex-column justify-content-between gap-2">
+                <!-- COLORS -->
+                <div class="field ">
+                    <span>Colors</span>
+                    <div class="options d-flex flex-row gap-2">
+                        @foreach (var color in Model.Variants.Select(v => v.Color).Distinct())
+                        {
+                            <label class="color-wrapper @(color.Id == Model.SelectedColorId ? "border-color-accent" : "border-color-light")"
+                                   style="background-color:@color.HexColor">
+                                <input type="radio"
+                                       class="invisible"
+                                       name="SelectedColorId"
+                                       value="@color.Id"
+                                       @(color.Id == Model.SelectedColorId ? "checked" : "")/>
+                            </label>
+                        }
+                    </div>
+            
+                </div>
+                <!-- Sizes as radios -->
+                <div class="field">
+                    <span >Size</span>
+                    <div class="options d-flex flex-row gap-2" id="sizeOptions">
+                        @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
+                        {
 
-                    <span>@color.Text</span>
-                </label>
-            }
-        </div>
-    </div>
-
-    <!-- Sizes as radios -->
-    <div class="field">
-        <label>Size</label>
-        <div class="options" id="sizeOptions">
-            @foreach (var size in Model.Variants.Select(v => v.Size).Distinct())
-            {
-                    
-                <label class="option">
-                    @if (Model.Variants.Where(v => v.Size == size).Select(v =>v.Color.Value).Contains(Model.SelectedColorId))
-                    {
-                        <input type="radio" name="SelectedSizeId" value="@size.Value" class="color-selector"/>
-                        <span class="color-primary">@size.Text</span>
-                    }
-                    else
-                    {
-                        <input type="radio" name="SelectedSizeId" value="@size.Value" disabled="disabled"/>
-                        <span class="color-accent">@size.Text</span>
-                    }
-                </label>
-            }
-        </div>
-    </div>
+                            <label class="option">
+                                @if (Model.SelectedColorId is { } selectedColorId && Model.Variants.Where(v => v.Size == size).Select(v => v.Color.Id).Contains(selectedColorId))
+                                {
+                                    <input type="radio" name="SelectedSizeId" value="@size.Id" class="color-selector"/>
+                                    <span class="color-primary">@size.Size</span>
+                                }
+                                else
+                                {
+                                    <input type="radio" name="SelectedSizeId" value="@size.Id" disabled="disabled"/>
+                                    <span class="color-accent">@size.Size</span>
+                                }
+                            </label>
+                        }
+                    </div>
+                </div>
+            </div>
 
 
     <!-- Actions -->

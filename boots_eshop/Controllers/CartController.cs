@@ -29,8 +29,11 @@ public class CartController(StockService service) : Controller
                 return new CartItemViewModel()
                 {
                     ProductName = stockEntry.Product.Name,
+                    ProductId = stockEntry.ProductId,
                     Color = stockEntry.ProductColor.Name,
+                    ColorId = stockEntry.ProductColorId,
                     Size = stockEntry.ProductSize.Size,
+                    SizeId = stockEntry.ProductSizeId,
                     Quantity = c.Quantity,
                     UnitPrice = stockEntry.Product.Price,
                     SaleUnitPrice = stockEntry.Product.SalePrice,
@@ -43,9 +46,9 @@ public class CartController(StockService service) : Controller
     }
 
     
-    public IActionResult Add(Guid productId, Guid? colorId = null)
+    public IActionResult Add(Guid productId, Guid? colorId = null, Guid? sizeId = null)
     {
-        return ViewComponent("AddCartEntry", new  {productId, colorId});
+        return ViewComponent("AddCartEntry", new  {productId, colorId, sizeId});
     }
 
     [HttpPost]
@@ -56,15 +59,17 @@ public class CartController(StockService service) : Controller
             ? JsonSerializer.Deserialize<Cart>(arr)
             : new Cart();
 
+        if(model.SelectedSizeId is null)
+            return View(model);
         // find stock id
         var id = _stockService.GetStock(model.ProductId)
             .First(s =>
-                s.ProductColorId.ToString() == model.SelectedColorId &&
-                s.ProductSizeId.ToString() == model.SelectedSizeId
+                s.ProductColorId == model.SelectedColorId &&
+                s.ProductSizeId == model.SelectedSizeId
             ).Id;
 
 
-        if (cart.CartEntries.Find(c => c.StockId == model.StockId) is { } entry)
+        if (cart.CartEntries.Find(c => c.StockId == id) is { } entry)
         {
             entry.Quantity += model.Quantity;
         }

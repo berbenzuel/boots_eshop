@@ -28,7 +28,7 @@ public class ProductDetailController : Controller
 
     
     
-    public IActionResult Index(Guid productId, Guid? colorId = null)
+    public IActionResult Index(Guid productId, Guid? colorId = null, Guid? sizeId = null)
     {
         var product = _productService.GetEntities()
             .Include(p => p.Manufacturer)
@@ -57,6 +57,7 @@ public class ProductDetailController : Controller
                 StockQuantity = s.Quantity
             }).ToList(), 
             SelectedColorId = colorId is {} color ? color : colors.First().Id,
+            SelectedSizeId = sizeId,
             ImageUrls =  _sourceService.GetProductImagePaths(productId)?
                 .Select(f => Url.Action("ProductImage", "Source", new {filename = Path.GetFileName(f)}))
                 .ToList() ?? new List<string>(),
